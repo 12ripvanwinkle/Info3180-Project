@@ -1,15 +1,27 @@
-from flask import Flask
-from .config import Config
+from flask import Flask,jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-
-db = SQLAlchemy()   
-migrate = Migrate()
+from app.config import Config
+from .models import db, User, Profile, Favourite  
+from flask_login import LoginManager
 
 app = Flask(__name__)
-app.config.from_object(Config)
+app.config.from_object(Config)  
 
 db.init_app(app)
-migrate.init_app(app, db)
+migrate = Migrate(app, db)
 
-from app import views,models
+# Flask-Login login manager
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = '/api/auth/login'
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
+
+@login_manager.unauthorized_handler
+def unauthorized():
+    return jsonify({'error': 'Unauthorized access'}), 401
+
+from app import views  # Import views after initializing app and db to avoid circular imports
