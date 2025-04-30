@@ -248,7 +248,7 @@ def get_profile(profile_id):
     except Exception as e:
         return jsonify({'error': f'Something went wrong: {str(e)}'}), 500
 
-@app.route("/api/profiles/{user_id}/favourite", methods=["POST"])
+@app.route("/api/profiles/<int:user_id>/favourite", methods=["POST"])
 @login_required
 def add_favourite(user_id):
     try:
@@ -262,41 +262,64 @@ def add_favourite(user_id):
     except Exception as e:
         return jsonify({'error': f'An error occurred: {str(e)}'}), 500    
     
-@app.route("/api/profiles/matches/{profile_id}", methods=["GET"])
+@app.route("/api/profiles/matches/<int:profile_id>", methods=["GET"])
 def get_profile_matches(profile_id):
-    profiles = Profile.query.filter_by(user_id_fk=profile_id).all()
-    found_profiles = []
-    for profile in profiles:
-        found_profiles.append({
-            'id': profile.id,
-            'user_id': profile.user_id_fk,
-            'description': profile.description,
-            'parish': profile.parish,
-            'biography': profile.biography,
-            'sex': profile.sex,
-            'race': profile.race,
-            'birth_year': profile.birth_year,
-            'height': profile.height,
-            'fav_cuisine': profile.fav_cuisine,
-            'fav_colour': profile.fav_colour,
-            'fav_school_subject': profile.fav_school_subject,
-            'political': profile.political,
-            'religious': profile.religious,
-            'family_oriented': profile.family_oriented
-        })
-    return jsonify(found_profiles), 200
+    try:
+        profile = Profile.query.get(profile_id)
+        if profile is None:
+            return jsonify({'error': 'Profile not found'}), 404
+        
+        profile_name = profile.user.name
+        profile_birth_year = profile.birth_year
+        profile_sex = profile.sex
+        profile_race = profile.race
+
+        profiles =  Profile.query.join(User).filter(
+            (User.name == profile_name ) if profile_name else True,
+            (Profile.birth_year == profile_birth_year) if profile_birth_year else True,
+            (Profile.sex == profile_sex ) if profile_sex else True,
+            (Profile.race ==profile_race) if profile_race else True
+        ).all()
+
+        found_profiles = []
+        for match in profiles:
+            found_profiles.append({
+                'id': profile.id,
+                'user_id': profile.user_id_fk,
+                'description': profile.description,
+                'parish': profile.parish,
+                'biography': profile.biography,
+                'sex': profile.sex,
+                'race': profile.race,
+                'birth_year': profile.birth_year,
+                'height': profile.height,
+                'fav_cuisine': profile.fav_cuisine,
+                'fav_colour': profile.fav_colour,
+                'fav_school_subject': profile.fav_school_subject,
+                'political': profile.political,
+                'religious': profile.religious,
+                'family_oriented': profile.family_oriented
+            })
+        return jsonify(found_profiles), 200
+    
+    except Exception as e:
+        return jsonify({'error': f'An error occurred: {str(e)}'}), 500
+    
 
 
 @app.route("/api/search", methods=["GET"])
 def search():
-    name = request.args.get('name')
-    birth_year = request.args.get('birth_year')
-    sex = request.args.gets('sex')
-    race = request.args.get('race')
+    name = request.form.get('name')
+    birth_year = request.form.get('birth_year')
+    sex = request.form.get('sex')
+    race = request.form.get('race')
 
-    query =  Profile.query.join((User).filter(
+    if not name and not birth_year and not sex and not race:
+        return jsonify({'error': 'No search parameters provided'}), 400
+
+    query =  Profile.query.join(User).filter(
         (User.name == name ) if name else True,
-        Profile.birth_year == birth_year) if birth_year else True,
+        (Profile.birth_year == birth_year) if birth_year else True,
         (Profile.sex == sex ) if sex else True,
         (Profile.race ==race) if race else True
     ).all()
@@ -323,7 +346,7 @@ def search():
         })
     return jsonify(found_profiles), 200
 
-@app.route("/api/users/{user_id}")
+@app.route("/api/users/<int:user_id>", methods=["GET"])
 def get_user(user_id):
     try:
         user = User.query.get(user_id)
@@ -343,7 +366,7 @@ def get_user(user_id):
         return jsonify({'error': f'Something went wrong: {str(e)}'}), 500
 
 
-@app.route("/api/users/{user_id}/favourites", methods=["GET"])
+@app.route("/api/users/<int:user_id>/favourites", methods=["GET"])
 def get_user_favourites(user_id):
     try:
         user = User.query.get(user_id)
@@ -365,10 +388,15 @@ def get_user_favourites(user_id):
     except Exception as e:
         return jsonify({'error': f'Something went wrong: {str(e)}'}), 500
     
-@app.route("/api/users/favourties/{N}")
+@app.route("/api/users/favourties/<int:N>", methods=["GET"])
 def most_favourite_users(N):
     try:
-        users = User.query.join(Favourite).group_by(User.id).order_by(db.func.count(Favourite.id).desc()).limit(N).all()
+        users = db.session.query(User).\
+        join(Favourite, User.id == Favourite.fav_user_id_fk).\
+        group_by(User.id).\
+        order_by(db.func.count(Favourite.id).desc()).\
+        limit(N).\
+        all()
         users_data = []
         for user in users:
             users_data.append({
