@@ -1,11 +1,19 @@
 <template>
     <div class="form-container">
+      <nav class="nav">
+        <h1 class="logo">Jam-Date</h1>
+        <router-link to="/" class="nav-link">Home</router-link>
+        <router-link to="/login" class="nav-link">Login</router-link>
+        <router-link to="/register" class="nav-link">Register</router-link>
+      </nav>
       <div class="form-box">
         <h2>Register</h2>
-        <form @submit.prevent="register">
-          <input v-model="username" placeholder="Username" required />
-          <input v-model="email" type="email" placeholder="Email" required />
-          <input v-model="password" type="password" placeholder="Password" required />
+        <form method = "POST" enctype="multipart/form-data" @submit.prevent="register" id="registrationForm">
+          <input v-model="formData.username" type="text" placeholder="Username" required />
+          <input v-model="formData.email" type="email" placeholder="Email" required />
+          <input v-model="formData.name" type="text" placeholder="Name" required />
+          <input v-model="formData.password" type="password" placeholder="Password" required />
+          <input type="file" @change="handleFileChange"/>
           <button type="submit">Register</button>
         </form>
       </div>
@@ -13,27 +21,56 @@
 </template>
   
 <script setup>
-  import { ref } from 'vue';
-  import axios from 'axios';
+  import { ref, onMounted } from 'vue';
   import { useRouter } from 'vue-router';
-  
-  const username = ref('');
-  const email = ref('');
-  const password = ref('');
+  const formData = ref({
+    username: '',
+    email: '',
+    name: '',
+    password: '',
+    profilePic: null
+  });
+
   const router = useRouter();
   
-  const register = async () => {
-    try {
-      await axios.post('/api/register', {
-        username: username.value,
-        email: email.value,
-        password: password.value,
-      });
+  function register() {
+    let registrationForm = document.getElementById('registrationForm');
+    let form_data = new FormData(registrationForm);
+
+    form_data.append('username', formData.username);
+    form_data.append('email', formData.email);
+    form_data.append('name', formData.name);
+    form_data.append('password', formData.password);
+    form_data.append('profilePic', formData.profilePic);
+
+    fetch('/api/register', {
+      method: 'POST',
+      body: form_data
+    })
+    .then(function (response) {
+      if (!response.ok){
+        throw new Error("Could not register");
+      }
+      return response.json
+    })
+    .then(function (data) {
+      console.log('Success:', data);
+      formData.value = {
+        username: '',
+        email: '',
+        name: '',
+        password: '',
+        profilePic: null
+      };
       router.push('/login');
-    } catch {
-      alert('Registration failed.');
-    }
-  };
+    })
+    .catch(function (error) {
+      console.error('Error:', error)
+    });
+  }; 
+  function handleFileChange(event) {
+        formData.profilePic = event.target.files[0];
+}
 </script>
   
 <style scoped lang="css">  
@@ -44,7 +81,27 @@
     min-height: 100vh;
     background-color: #f4f4f4;
   }
-  
+  .nav {
+    display: flex;
+    justify-content: flex-end;
+    padding: 1rem 2rem;
+    gap: 1.5rem;
+    background-color: rgba(0, 0, 0, 0.6); 
+    position: absolute;
+    width: 100%;
+    top: 0;
+    z-index: 10;
+}
+
+  .nav-link {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+  .nav-link:hover {
+    text-decoration: underline;
+}
   .form-box {
     background: white;
     padding: 2rem;
