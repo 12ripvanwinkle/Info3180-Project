@@ -248,6 +248,141 @@ def get_profile(profile_id):
     except Exception as e:
         return jsonify({'error': f'Something went wrong: {str(e)}'}), 500
 
+@app.route("/api/profiles/{user_id}/favourite", methods=["POST"])
+@login_required
+def add_favourite(user_id):
+    try:
+        user_id_fk = current_user.id
+        favourite_user_id_fk = user_id
+        favourite = Favourite(user_id_fk=user_id_fk, fav_user_id_fk=favourite_user_id_fk)
+        db.session.add(favourite)
+        db.session.commit()
+        return jsonify({'message': 'Favourite added successfully'}), 201
+
+    except Exception as e:
+        return jsonify({'error': f'An error occurred: {str(e)}'}), 500    
+    
+@app.route("/api/profiles/matches/{profile_id}", methods=["GET"])
+def get_profile_matches(profile_id):
+    profiles = Profile.query.filter_by(user_id_fk=profile_id).all()
+    found_profiles = []
+    for profile in profiles:
+        found_profiles.append({
+            'id': profile.id,
+            'user_id': profile.user_id_fk,
+            'description': profile.description,
+            'parish': profile.parish,
+            'biography': profile.biography,
+            'sex': profile.sex,
+            'race': profile.race,
+            'birth_year': profile.birth_year,
+            'height': profile.height,
+            'fav_cuisine': profile.fav_cuisine,
+            'fav_colour': profile.fav_colour,
+            'fav_school_subject': profile.fav_school_subject,
+            'political': profile.political,
+            'religious': profile.religious,
+            'family_oriented': profile.family_oriented
+        })
+    return jsonify(found_profiles), 200
+
+
+@app.route("/api/search", methods=["GET"])
+def search():
+    name = request.args.get('name')
+    birth_year = request.args.get('birth_year')
+    sex = request.args.gets('sex')
+    race = request.args.get('race')
+
+    query =  Profile.query.join((User).filter(
+        (User.name == name ) if name else True,
+        Profile.birth_year == birth_year) if birth_year else True,
+        (Profile.sex == sex ) if sex else True,
+        (Profile.race ==race) if race else True
+    ).all()
+
+    found_profiles = []
+    for profile in query:
+    
+        found_profiles.append({
+            'id': profile.id,
+            'user_id': profile.user_id_fk,
+            'description': profile.description,
+            'parish': profile.parish,
+            'biography': profile.biography,
+            'sex': profile.sex,
+            'race': profile.race,
+            'birth_year': profile.birth_year,
+            'height': profile.height,
+            'fav_cuisine': profile.fav_cuisine,
+            'fav_colour': profile.fav_colour,
+            'fav_school_subject': profile.fav_school_subject,
+            'political': profile.political,
+            'religious': profile.religious,
+            'family_oriented': profile.family_oriented
+        })
+    return jsonify(found_profiles), 200
+
+@app.route("/api/users/{user_id}")
+def get_user(user_id):
+    try:
+        user = User.query.get(user_id)
+        if not user:
+            return jsonify({'error': 'User not found'}), 404
+
+        user_data = {
+            'id': user.id,
+            'name': user.name,
+            'email': user.email,
+            'password': user.password
+        }
+
+        return jsonify(user_data), 200
+
+    except Exception as e:
+        return jsonify({'error': f'Something went wrong: {str(e)}'}), 500
+
+
+@app.route("/api/users/{user_id}/favourites", methods=["GET"])
+def get_user_favourites(user_id):
+    try:
+        user = User.query.get(user_id)
+        if not user:
+            return jsonify({'error': 'User not found'}), 404
+
+        favourites = Favourite.query.filter_by(user_id_fk=user_id).all()
+        favourites_user_data = []
+        for favourite in favourites:
+            fav_user = User.query.get(favourite.fav_user_id_fk)
+            favourites_user_data.append({
+                'id': fav_user.id,
+                'name': fav_user.name,
+                'email': fav_user.email,
+                'password': fav_user.password
+            })
+
+        return jsonify(favourites_user_data), 200
+    except Exception as e:
+        return jsonify({'error': f'Something went wrong: {str(e)}'}), 500
+    
+@app.route("/api/users/favourties/{N}")
+def most_favourite_users(N):
+    try:
+        users = User.query.join(Favourite).group_by(User.id).order_by(db.func.count(Favourite.id).desc()).limit(N).all()
+        users_data = []
+        for user in users:
+            users_data.append({
+                'id': user.id,
+                'name': user.name,
+                'email': user.email,
+                'password': user.password
+            })
+
+        return jsonify(users_data), 200
+    except Exception as e:
+        return jsonify({'error': f'Something went wrong: {str(e)}'}), 500
+
+
 
 @app.route('/')
 def index():
