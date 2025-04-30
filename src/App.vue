@@ -1,21 +1,27 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
-import AppHeader from "@/components/AppHeader.vue";
+import AuthHeader from "@/components/AuthHeader.vue";
 import AppFooter from "@/components/AppFooter.vue";
 </script>
 
 <template>
-  <AppHeader />
-
   <main>
     <RouterView />
   </main>
-  
-  <AppFooter />
 </template>
 
 <style>
-body {
-  padding-top: 75px;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: Arial, sans-serif;
+  background-color: #fff;
 }
 </style>
