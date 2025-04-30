@@ -1,9 +1,15 @@
 <template>
     <div class="form-container">
+      <nav class="nav">
+        <h1 class="logo">Jam-Date</h1>
+        <router-link to="/" class="nav-link">Home</router-link>
+        <router-link to="/login" class="nav-link">Login</router-link>
+        <router-link to="/register" class="nav-link">Register</router-link>
+      </nav>
       <div class="form-box">
         <h2>Jam-Date</h2>
         <form @submit.prevent="login">
-          <input v-model="email" type="email" placeholder="Email" required />
+          <input v-model="username" type="text" placeholder="Email" required />
           <input v-model="password" type="password" placeholder="Password" required />
           <button type="submit">Login</button>
         </form>
@@ -16,13 +22,13 @@
   import axios from 'axios';
   import { useRouter } from 'vue-router';
   
-  const email = ref('');
+  const username = ref('');
   const password = ref('');
   const router = useRouter();
   
   const login = async () => {
     try {
-      const res = await axios.post('/api/auth/login', { email: email.value, password: password.value });
+      const res = await axios.post('/api/auth/login', { username: username.value, password: password.value });
       localStorage.setItem('token', res.data.token);
       router.push('/home');
     } catch {
@@ -39,6 +45,27 @@
     min-height: 100vh;
     background-color: #f4f4f4;
   }
+  .nav {
+  display: flex;
+  justify-content: flex-end;
+  padding: 1rem 2rem;
+  gap: 1.5rem;
+  background-color: rgba(0, 0, 0, 0.6); 
+  position: absolute;
+  width: 100%;
+  top: 0;
+  z-index: 10;
+}
+
+.nav-link {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.nav-link:hover {
+  text-decoration: underline;
+}
   
   .form-box {
     background: white;
