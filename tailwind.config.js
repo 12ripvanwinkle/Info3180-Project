@@ -5,7 +5,14 @@ module.exports = {
     './src/**/*.{vue,js,ts,jsx,tsx}',
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        pacifico: ['Pacifico', 'cursive'],
+        ubuntu: ['Ubuntu', 'sans-serif'],
+        spacegrotesk: ['Space Grotesk', 'sans-serif'],
+
+      }
+    },
   },
   plugins: [],
 }
