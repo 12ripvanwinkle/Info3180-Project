@@ -136,9 +136,10 @@ def create_profile():
         if missing_fields:
             return jsonify({'error': f'Missing fields: {", ".join(missing_fields)}'}), 400
         
-        # verify if the user already has a profile
-        if current_user.profile:
-            return jsonify({'error': 'Profile already exists for this user.'}), 400
+        # Check how many profiles this user already has
+        profile_count = Profile.query.filter_by(user_id_fk=current_user.id).count()
+        if profile_count >= 3:
+            return jsonify({'error': 'You can only create up to 3 profiles.'}), 400
         
         # Create profile
         profile = Profile(
