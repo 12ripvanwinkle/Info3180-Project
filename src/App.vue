@@ -1,8 +1,7 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
-import AuthHeader from "@/components/AuthHeader.vue";
-import AppFooter from "@/components/AppFooter.vue";
-import '@/assets/Main.css'
+import { RouterLink, RouterView } from 'vue-router';
+import NavigateBar from './components/NavigateBar.vue';
+import '@/assets/Main.css';
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

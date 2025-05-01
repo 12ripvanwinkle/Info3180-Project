@@ -1,6 +1,7 @@
 export function getToken() {
-    return localStorage.getItem('token');
-  }
+  const token = localStorage.getItem('token');
+  return token !== "undefined" ? token : null;
+}
   
 export function authHeader() {
     const token = getToken();

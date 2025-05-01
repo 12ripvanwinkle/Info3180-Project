@@ -9,7 +9,7 @@
       <div class="form-box">
         <h2>Jam-Date</h2>
         <form @submit.prevent="login">
-          <input v-model="username" type="text" placeholder="Email" required />
+          <input v-model="username" type="text" placeholder="Username" required />
           <input v-model="password" type="password" placeholder="Password" required />
           <button type="submit">Login</button>
         </form>
@@ -30,6 +30,7 @@
     try {
       const res = await axios.post('/api/auth/login', { username: username.value, password: password.value });
       localStorage.setItem('token', res.data.token);
+      localStorage.setItem('user_id', res.data.user.id)
       router.push('/home');
     } catch {
       alert('Login failed.');

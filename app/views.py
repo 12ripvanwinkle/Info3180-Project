@@ -13,6 +13,7 @@ from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
 from flask_login import login_user, logout_user, current_user, login_required
+from flask_jwt_extended import create_access_token
 
 ###
 # Routing for your application.
@@ -94,10 +95,12 @@ def login():
         user = User.query.filter_by(username=username).first()
 
         if user and check_password_hash(user.password, password):
+            access_token = create_access_token(identity=user.id)
             # Successful login
             login_user(user)
             return jsonify({
                 'message': 'Login successful',
+                'token': access_token,
                 'user': {
                     'id': user.id,
                     'username': user.username,
@@ -284,21 +287,21 @@ def get_profile_matches(profile_id):
         found_profiles = []
         for match in profiles:
             found_profiles.append({
-                'id': profile.id,
-                'user_id': profile.user_id_fk,
-                'description': profile.description,
-                'parish': profile.parish,
-                'biography': profile.biography,
-                'sex': profile.sex,
-                'race': profile.race,
-                'birth_year': profile.birth_year,
-                'height': profile.height,
-                'fav_cuisine': profile.fav_cuisine,
-                'fav_colour': profile.fav_colour,
-                'fav_school_subject': profile.fav_school_subject,
-                'political': profile.political,
-                'religious': profile.religious,
-                'family_oriented': profile.family_oriented
+                'id': match.id,
+                'user_id': match.user_id_fk,
+                'description': match.description,
+                'parish': match.parish,
+                'biography': match.biography,
+                'sex': match.sex,
+                'race': match.race,
+                'birth_year': match.birth_year,
+                'height': match.height,
+                'fav_cuisine': match.fav_cuisine,
+                'fav_colour': match.fav_colour,
+                'fav_school_subject': match.fav_school_subject,
+                'political': match.political,
+                'religious': match.religious,
+                'family_oriented': match.family_oriented
             })
         return jsonify(found_profiles), 200
     
@@ -357,7 +360,8 @@ def get_user(user_id):
             'id': user.id,
             'name': user.name,
             'email': user.email,
-            'password': user.password
+            'password': user.password,
+            'photo': user.photo
         }
 
         return jsonify(user_data), 200
@@ -403,7 +407,7 @@ def most_favourite_users(N):
                 'id': user.id,
                 'name': user.name,
                 'email': user.email,
-                'password': user.password
+                'password': user.password,
             })
 
         return jsonify(users_data), 200
@@ -453,9 +457,3 @@ def add_header(response):
     response.headers['X-UA-Compatible'] = 'IE=Edge,chrome=1'
     response.headers['Cache-Control'] = 'public, max-age=0'
     return response
-
-
-@app.errorhandler(404)
-def page_not_found(error):
-    """Custom 404 page."""
-    return render_template('404.html'), 404

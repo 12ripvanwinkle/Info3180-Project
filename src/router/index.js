@@ -4,11 +4,11 @@ import HomePageView from '../views/HomePageView.vue';
 import RegisterView from '../views/RegisterView.vue';
 import LoginView from '../views/LoginView.vue';
 import ProfileDetailView from '../views/ProfileDetailView.vue';
-import MyProfileView from '../views/MyProfileView.vue';
+import UserProfileView from '../views/UserProfileView.vue';
+import MatchMeView from '../views/MatchMeView.vue';
+import ReportView from '../views/ReportView.vue';
+import LogoutView from '../views/LogoutView.vue';
 import NewProfileView from '../views/NewProfileView.vue';
-import FavouritesView from '../views/FavouritesView.vue';
-import MatchReportView from '../views/MatchReportView.vue';
-
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -34,24 +34,34 @@ const router = createRouter({
       component: LoginView
     },
     {
-      path: '/users/{user_id}',
-      name: 'my profile',
-      component: MyProfileView
+      path: '/logout',
+      name: 'Logout',
+      component: LogoutView
+    },
+    { path: '/profiles/:profile_id', 
+      name: 'ProfileDetails', 
+      component: ProfileDetailView 
+    },
+    { 
+      path: '/users/:user_id', 
+      name: 'UserProfile', 
+      component: UserProfileView 
     },
     {
       path: '/profiles/new',
-      name: 'new profile',
+      name: 'NewProfile',
       component: NewProfileView
     },
-    {
-      path: '/profiles/{profile_id}',
-      name: 'profile detail',
-      component: ProfileDetailView
+
+    { 
+      path: '/profiles/:profile_id/matches', 
+      name: 'MatchMe', 
+      component: MatchMeView
     },
-    {
-      path: '//profiles/favourites',
-      name: 'favourite',
-      component: FavouritesView
+    { 
+      path: '/profiles/favourites', 
+      name: 'Reports', 
+      component: ReportView
     }
   ]
 })
