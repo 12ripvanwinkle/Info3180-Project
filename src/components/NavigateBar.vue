@@ -39,15 +39,16 @@
  import defaultProfileImage from '@/assets/Default/noProfile.png'; 
 
  const user = ref({
-    name: 'testuser',
-    photo: 'noProfile.png',
+    name: '',
+    photo: null,
   });
 
   onMounted(() => {
-  const storedName = localStorage.getItem('user_name');
-  const storedPhoto = localStorage.getItem('user_photo');
-  user.value.name = storedName;
-  user.value.photo = storedPhoto ;
+    const storedName = localStorage.getItem('name');
+    const storedPhoto = localStorage.getItem('photo');
+
+    user.value.name = storedName || 'Anonymous';
+    user.value.photo = storedPhoto || '';
   });
 
   function toggleDropdown() {
@@ -55,8 +56,11 @@
   }
 
   function getPhotoUrl(filename) {
-    return filename ? `/uploads/${filename}` : defaultProfileImage;
-  }
+    if (!filename || filename === 'undefined') {
+      return defaultProfileImage;
+    }
+    return `/uploads/${filename}`;
+}
 </script>
 
 <style scoped>

@@ -50,10 +50,7 @@ function getPhotoUrl(filename) {
 }
 onMounted(async () => {
     try{
-        console.log("localStorage contents:", { ...localStorage });
         const userId = parseInt(localStorage.getItem('user_id'));
-        console.log("User ID from route:", userId);
-
         const userRes = await axios.get(`/api/users/${userId}`);
         user.value = userRes.data;
 
