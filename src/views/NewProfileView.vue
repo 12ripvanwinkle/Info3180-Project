@@ -1,4 +1,5 @@
 <template>
+
     <div class="min-h-screen max-h-screen overflow-y-auto bg-gray-50 py-12 px-4">
       <div class="max-w-2xl mx-auto bg-white rounded-lg shadow-lg p-6">
         <h1 class="text-2xl font-bold text-center mb-6 text-red-600">Create New Profile</h1>
@@ -36,6 +37,7 @@
   import axios from 'axios';
   import { useRouter } from 'vue-router';
   import { getToken } from '../utils/auth';
+  import NavigateBar from '../components/NavigateBar.vue';
   
   const router = useRouter();
   

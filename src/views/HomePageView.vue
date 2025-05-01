@@ -3,12 +3,21 @@
         <!-- Navigation Bar -->
         <NavigateBar />
 
-        <!-- Profile Button -->
     
         <!-- Welcome Heading -->
         
         <h1 class="text-3xl font-build text-center text-rose-600 my-12 mb-6 font-pacifico font-semibold">Welcome to Jam-Date</h1>
 
+        <div class="flex justify-center mb-6">
+        <router-link to="/profiles/favourites">
+            <button
+            type="button"
+            class="bg-rose-500 text-white font-pacifico px-6 py-2 rounded-lg shadow hover:bg-rose-700 transition duration-300 ease-in-out"
+            >
+            View Favorites   ➤
+            </button>
+        </router-link>
+        </div>
         <!-- Search Profiles Section -->
          
         <div class="max-w-3xl mx-auto bg-white shadow-md rounded-lg p-6 mb-8">
