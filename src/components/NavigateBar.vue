@@ -1,46 +1,64 @@
 <template>
-    <nav class="bg-white shadow p-4 flex justify-between items-center sticky top-0 z-50">
-      <router-link to="/" class="text-2xl font-bold text-red-600">Jam-Date</router-link>
+  <nav class="bg-[#e2143c] shadow p-4 flex justify-between items-center sticky top-0 z-50">
+    <router-link to="/home" class="text-2xl font-bold text-white font-pacifico">Jam-Date</router-link>
+
+    <div class="flex gap-4 items-center relative">
+
+  
       
-      <div class="flex gap-4 items-center">
-        <router-link
-          v-if="isLoggedIn"
-          :to="`/users/${userId}`"
-          class="nav-link text-gray-700 font-medium"
-          active-class="font-bold underline"
-        >My Profile</router-link>
-  
-        <router-link
-          v-if="isLoggedIn "
-          to="/profiles/new"
-          class="nav-link text-gray-700 font-medium"
-          active-class="font-bold underline"
-        >Add Profile</router-link>
-  
-        <router-link
-          v-if="isLoggedIn"
-          to="/profiles/favourites"
-          class="nav-link text-gray-700 font-medium"
-          active-class="font-bold underline"
-        >Reports</router-link>
-  
-        <router-link
-          v-if="isLoggedIn"
-          to="/logout"
-          class="nav-link text-gray-700 font-medium"
-          active-class="font-bold underline"
-        >Logout</router-link>
+
+
+
+      <!--Profile Section-->
+      <div class="relative" @click="toggleDropdown">
+        <div class="flex items-center cursor-pointer">
+          <img
+            :src="getPhotoUrl(user.photo)"
+            alt="Profile"
+            class="w-10 h-10 rounded-full object-cover border-2 border-white"
+          />
+          <span class="ml-2 text-white font-[500]">{{ user.name || 'testuser' }}</span>
+        </div>
+        <div
+          v-if="showDropdown"
+          class="absolute right-0 mt-2 w-40 bg-white rounded shadow-md z-50"
+        >
+          <router-link :to="`/users/${userId}`"class="block px-4 py-2 font-semibold hover:bg-gray-100 text-gray-700 font-ubuntu" active-class="font-bold underline">My Profile</router-link>
+          <router-link to="/profiles/new" class="block px-4 py-2 font-semibold hover:bg-gray-100 text-gray-700 font-ubuntu" active-class="font-bold underline" >Add Profile</router-link>
+          <router-link to="/logout" class="block px-4 py-2 font-semibold hover:bg-gray-100 text-gray-700 font-ubuntu" active-class="font-bold underline">Logout</router-link>
+        </div>
       </div>
-    </nav>
+    </div>
+  </nav>
 </template>
-  
+
 <script setup>
-  import { computed } from 'vue';
-  
-  const userId = localStorage.getItem('user_id');
-  const isLoggedIn = computed(() => !!localStorage.getItem('token'));
+ import { ref, onMounted } from 'vue';
+ const userId = localStorage.getItem('user_id');
+ const showDropdown = ref(false);
+ import defaultProfileImage from '@/assets/Default/noProfile.png'; 
+
+ const user = ref({
+    name: 'testuser',
+    photo: 'noProfile.png',
+  });
+
+  onMounted(() => {
+  const storedName = localStorage.getItem('user_name');
+  const storedPhoto = localStorage.getItem('user_photo');
+  user.value.name = storedName;
+  user.value.photo = storedPhoto ;
+  });
+
+  function toggleDropdown() {
+    showDropdown.value = !showDropdown.value;
+  }
+
+  function getPhotoUrl(filename) {
+    return filename ? `/uploads/${filename}` : defaultProfileImage;
+  }
 </script>
-  
+
 <style scoped>
   .nav-link {
     transition: all 0.2s ease-in-out;
@@ -49,4 +67,3 @@
     color: #dc2626;
   }
 </style>
-  
