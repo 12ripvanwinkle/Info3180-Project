@@ -1,4 +1,5 @@
 <template>
+    <NavigateBar/>
 
     <div class="min-h-screen max-h-screen overflow-y-auto bg-gray-50 py-12 px-4">
       <div class="max-w-2xl mx-auto bg-white rounded-lg shadow-lg p-6">

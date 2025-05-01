@@ -3,8 +3,8 @@
 
     <div class="min-h-screen  bg-rose-500 py-10 px-4 text-gray-800">
       <div class="max-w-6xl mx-auto text-center mb-8">
-        <h1 class="text-5xl  text-white font-pacifico mb-2">Favourites </h1>
-        <p class="text-white font-ubuntu my-4 font-semibold">See who's most loved and your own favourites</p>
+        <h1 class="text-5xl  text-white font-pacifico mb-2">♥ Favourites ♥</h1>
+        <p class="text-white font-ubuntu my-4 font-semibold">See who's most loved and your own favourites 🎔</p>
       </div>
 
       <div class="max-w-3xl mx-auto flex flex-wrap justify-center gap-4 mb-8">

@@ -1,6 +1,12 @@
 <template>
+     <!-- Navbar -->
     <NavigateBar />
-    <div class="min-h-screen bg-gray-50 py-10 px-4 text-gray-800">
+
+    <!-- User Profile Header -->
+    <div class="min-h-screen  py-10 px-4 text-gray-800">
+      <div class = "bg-white shadow-md rounded-lg p-6 mb-8">
+        <h1 class="text-5xl text-center text-rose-600 font-pacifico mb-2">My Profile</h1>
+        <p class="text-center text-gray-500 font-ubuntu my-4 font-semibold">See your profiles and favorites</p>
       <div class="max-w-4xl mx-auto text-center mb-10">
         <img :src="getPhotoUrl(user.photo)" alt="Profile" class="w-32 h-32 rounded-full mx-auto mb-4 shadow-lg border-4 border-white" />
         <h1 class="text-3xl font-bold">My Profile</h1>
@@ -30,6 +36,7 @@
         </div>
         <p v-else class="text-sm text-gray-500">You haven't favorited any users yet.</p>
       </section>
+    </div>
     </div>
   </template>
 
