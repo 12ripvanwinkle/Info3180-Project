@@ -1,63 +1,126 @@
 <template>
-    <div class="form-container">
-      <nav class="nav">
-        <h1 class="logo">Jam-Date</h1>
-        <router-link to="/" class="nav-link">Home</router-link>
-        <router-link to="/login" class="nav-link">Login</router-link>
-        <router-link to="/register" class="nav-link">Register</router-link>
-      </nav>
-      <div class="form-box">
-        <h2>Register</h2>
-        <form method = "POST" enctype="multipart/form-data" @submit.prevent="register" id="registrationForm">
-          <input v-model="formData.username" type="text" placeholder="Username" required />
-          <input v-model="formData.email" type="email" placeholder="Email" required />
-          <input v-model="formData.name" type="text" placeholder="Name" required />
-          <input v-model="formData.password" type="password" placeholder="Password" required />
-          <input type="file" @change="handleFileChange"/>
-          <button type="submit">Register</button>
+  <div class="flex h-screen">
+    <!-- Carousel Section -->
+    <div class="w-1/2 bg-[#e2143c] flex items-center justify-center">
+      <div class="flex flex-col items-center justify-center h-full w-full">
+        <h1 class="text-5xl text-[#E8C2CA] font-pacifico py-4">Find Love Today</h1>
+        <div class="w-[500px] h-[600px] rounded-2xl shadow-xl overflow-hidden mb-4">
+          <Carousel />
+        </div>
+      </div>
+    </div>
+
+    <!-- Register Form Section -->
+    <div class="w-1/2 bg-[#E8C2CA] flex flex-col items-center justify-center px-6">
+      <div class="bg-white rounded-lg shadow-md w-full max-w-md p-6">
+        <h2 class="text-center text-3xl font-bold mb-6 font-pacifico">Jam-Date</h2>
+        <form method="POST" enctype="multipart/form-data" @submit.prevent="register" class="space-y-4" id="registrationForm">
+          <input
+            v-model="formData.username"
+            type="text"
+            placeholder="Username"
+            required
+            class="w-full px-4 py-2 border border-gray-300 rounded-md"
+          />
+          <input
+            v-model="formData.email"
+            type="email"
+            placeholder="Email"
+            required
+            class="w-full px-4 py-2 border border-gray-300 rounded-md"
+          />
+          <input
+            v-model="formData.name"
+            type="text"
+            placeholder="Name"
+            required
+            class="w-full px-4 py-2 border border-gray-300 rounded-md"
+          />
+          <input
+            v-model="formData.password"
+            type="password"
+            placeholder="Password"
+            required
+            class="w-full px-4 py-2 border border-gray-300 rounded-md"
+          />
+          <div class="mb-4">
+            <label for="fileInput" class="flex items-center gap-4 p-3 border-2 border-rose-400 bg-white rounded-lg cursor-pointer hover:bg-rose-50 transition">
+              <span class="text-rose-500 px-2 py-1 rounded-md font-semibold border border-rose-400 bg-white font-size-3020">Choose Profile Picture</span>
+              <span class="text-sm text-gray-600 truncate max-w-[200px]">
+                {{ formData.profilePic ? formData.profilePic.name : 'No file chosen' }}
+              </span>
+              <input
+                id="fileInput"
+                type="file"
+                @change="handleFileChange"
+                accept="image/*"
+                class="hidden"
+              />
+            </label>
+          </div>
+
+          <div class="flex flex-col items-center gap-2">
+            <p class="text-sm text-rose-500">
+              Already have an account?
+              <a href="/login" class="underline font-medium text-pink-600 hover:text-pink-200">Sign in</a>
+            </p>
+            <button
+              type="submit"
+              class="w-full bg-rose-600 text-white font-bold py-2 rounded-md hover:bg-rose-800 transition"
+            >
+              Register
+            </button>
+            <button
+              class="w-full py-2 bg-white text-[#e2143c] rounded-full font-semibold hover:bg-rose-300 transition"
+              @click="$router.back?.() || window.history.back()"
+            >
+              Back
+            </button>
+          </div>
         </form>
       </div>
     </div>
+  </div>
 </template>
-  
+
 <script setup>
-  import { ref, onMounted } from 'vue';
-  import { useRouter } from 'vue-router';
-  const formData = ref({
-    username: '',
-    email: '',
-    name: '',
-    password: '',
-    profilePic: null
-  });
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+import Carousel from '@/components/Carousel.vue';
 
-  const router = useRouter();
+const formData = ref({
+  username: '',
+  email: '',
+  name: '',
+  password: '',
+  profilePic: null
+});
 
-  function handleFileChange(event) {
-        formData.value.profilePic = event.target.files[0];
+const router = useRouter();
+
+function handleFileChange(event) {
+  formData.value.profilePic = event.target.files[0];
 }
-  
-  function register() {
-    let registrationForm = document.getElementById('registrationForm');
-    const form_data = new FormData(registrationForm);
 
-    form_data.append('username', formData.value.username);
-    form_data.append('email', formData.value.email);
-    form_data.append('name', formData.value.name);
-    form_data.append('password', formData.value.password);
-    form_data.append('photo', formData.value.profilePic);
+function register() {
+  let registrationForm = document.getElementById('registrationForm');
+  const form_data = new FormData(registrationForm);
 
-    fetch('/api/register', {
-      method: 'POST',
-      body: form_data
-    })
-    .then(function (response) {
-      if (!response.ok){
-        throw new Error("Could not register");
-      }
+  form_data.append('username', formData.value.username);
+  form_data.append('email', formData.value.email);
+  form_data.append('name', formData.value.name);
+  form_data.append('password', formData.value.password);
+  form_data.append('photo', formData.value.profilePic);
+
+  fetch('/api/register', {
+    method: 'POST',
+    body: form_data
+  })
+    .then((response) => {
+      if (!response.ok) throw new Error('Could not register');
       return response.json();
     })
-    .then(function (data) {
+    .then((data) => {
       console.log('Success:', data);
       formData.value = {
         username: '',
@@ -68,72 +131,8 @@
       };
       router.push('/login');
     })
-    .catch(function (error) {
-      console.error('Error:', error)
+    .catch((error) => {
+      console.error('Error:', error);
     });
-  }
+}
 </script>
-  
-<style scoped lang="css">  
-  .form-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    background-color: #f4f4f4;
-  }
-  .nav {
-    display: flex;
-    justify-content: flex-end;
-    padding: 1rem 2rem;
-    gap: 1.5rem;
-    background-color: rgba(0, 0, 0, 0.6); 
-    position: absolute;
-    width: 100%;
-    top: 0;
-    z-index: 10;
-}
-
-  .nav-link {
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
-}
-
-  .nav-link:hover {
-    text-decoration: underline;
-}
-  .form-box {
-    background: white;
-    padding: 2rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    width: 100%;
-    max-width: 400px;
-  }
-  
-  h2 {
-    margin-bottom: 1.5rem;
-    text-align: center;
-  }
-  
-  input {
-    display: block;
-    width: 100%;
-    padding: 0.75rem;
-    margin-bottom: 1rem;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-  }
-  
-  button {
-    width: 100%;
-    padding: 0.75rem;
-    background-color: #dc2626;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    font-weight: bold;
-    cursor: pointer;
-  }
-</style>

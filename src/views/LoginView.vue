@@ -21,7 +21,7 @@
           <input
             v-model="username"
             type="text"
-            placeholder="Email"
+            placeholder="Username"
             required
             class="w-full px-4 py-2 border border-gray-300 rounded-md"
           />
@@ -46,7 +46,7 @@
             Login
           </button>
           <button
-            class="px-6 py-2 bg-white text-[#e2143c] rounded-full font-semibold hover:bg-[#f9d7dc] transition"
+            class="w-full py-2 bg-white text-[#e2143c] rounded-full font-semibold hover:bg-rose-300 transition"
             @click="$router.back?.() || window.history.back()"
           >
             Back
@@ -77,6 +77,7 @@ const login = async () => {
       password: password.value,
     });
     localStorage.setItem('token', res.data.token);
+    localStorage.setItem('user_id', res.data.user.id)
     router.push('/home');
   } catch {
     alert('Login failed.');
