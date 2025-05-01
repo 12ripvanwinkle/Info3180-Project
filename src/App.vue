@@ -1,8 +1,7 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
-import AuthHeader from "@/components/AuthHeader.vue";
-import AppFooter from "@/components/AppFooter.vue";
-import '@/assets/Main.css'
+import { RouterLink, RouterView } from 'vue-router';
+import NavigateBar from './components/NavigateBar.vue';
+import '@/assets/Main.css';
 </script>
 
 
