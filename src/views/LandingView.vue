@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col h-screen font-sans">
-    <!-- Hero Section -->
+    
     <div class="h-1/2 bg-[#e2143c] bg-cover bg-center relative text-white" >
         
         <!-- Welcome Logo -->
@@ -15,16 +15,16 @@
       
 
 
-      <!-- bottom half -->
-      <div class="h-1/2 bg-[#E8C2CA] p-8">
+      <!-- Bottom Half -->
+    <div class="h-1/2 bg-[#E8C2CA] p-8">
 
         <!-- Login and Registration Button Section -->
         <div class = "flex flex-row justify-center items-center my-auto">
           <router-link to="/login">
-              <button type="button" class="bg-rose-500 font-ubuntu-regular text-white text-medium leading-6 font-bold py-2 px-12 rounded-lg">Login</button>
+              <button type="button"  class="bg-rose-500 font-ubuntu-regular text-white text-medium leading-6 font-bold py-2 px-12 rounded-lg transition delay-50 duration-300 ease-in-out hover:scale-105">Login</button>
           </router-link>
           <router-link to="/register">
-              <button type= "button" class="bg-rose-500 font-ubuntu-regular text-white text-medium leading-6 font-bold py-2 px-12 rounded-lg ml-4">Register</button>
+              <button type= "button"  class="bg-rose-500 font-ubuntu-regular text-white text-medium leading-6 font-bold py-2 px-12 rounded-lg ml-4 transition delay-50 duration-300 ease-in-out hover:scale-105">Register</button>
           </router-link>
         </div>
 
@@ -34,7 +34,7 @@
           <div
             v-for="(image, index) in images"
             :key="index"
-            class="w-40 h-40 rounded-xl overflow-hidden shadow-md flex-shrink-0"
+            class="w-40 h-40 rounded-xl overflow-hidden shadow-md flex-shrink-0 transition delay-50 duration-300 ease-in-out hover:scale-105"
           >
             <img :src="image" class="object-cover w-full h-full" />
           </div>
@@ -80,6 +80,8 @@ onMounted(() => {
 onUnmounted(() => {
   clearInterval(interval);
 });
+
+
 </script>
 
 <style scoped>

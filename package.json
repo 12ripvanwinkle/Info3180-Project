@@ -11,7 +11,8 @@
         "info3180-group-project-code": "file:",
         "jwt-decode": "^4.0.0",
         "vue": "^3.2.47",
-        "vue-router": "^4.1.6"
+        "vue-router": "^4.1.6",
+        "vue3-carousel": "^0.15.0"
     },
     "devDependencies": {
         "@vitejs/plugin-vue": "^4.0.0",

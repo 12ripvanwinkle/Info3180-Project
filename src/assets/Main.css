@@ -11,11 +11,8 @@
     font-style: normal;
   }
 @layer base {
-    .pacifico-regular {
-  font-family: "Pacifico", cursive;
-  font-weight: 400;
-  font-style: normal;
-}
+
+    /* Global styles */
     html, body {
         font-family: 'ubuntu-regular','Inter', sans-serif;
         font-size: 16px;
@@ -32,6 +29,3 @@
     }
 }
 
-/* @layer base {
-    html, 
-} */
