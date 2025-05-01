@@ -77,7 +77,9 @@ const login = async () => {
       password: password.value,
     });
     localStorage.setItem('token', res.data.token);
-    localStorage.setItem('user_id', res.data.user.id)
+    localStorage.setItem('user_id', res.data.user.id);
+    localStorage.setItem('name', res.data.user.name);
+    localStorage.setItem('photo', res.data.user.photo);
     router.push('/home');
   } catch {
     alert('Login failed.');
