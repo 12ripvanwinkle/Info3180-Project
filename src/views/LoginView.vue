@@ -71,7 +71,7 @@ const password = ref('');
 const router = useRouter();
 
 const login = async () => {
-  try {
+  try { 
     const res = await axios.post('/api/auth/login', {
       username: username.value,
       password: password.value,

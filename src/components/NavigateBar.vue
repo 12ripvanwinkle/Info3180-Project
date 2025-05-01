@@ -15,7 +15,7 @@
           <img
             :src="getPhotoUrl(user.photo)"
             alt="Profile"
-            class="w-10 h-10 rounded-full object-cover border-2 border-white"
+            class="w-10 h-10 rounded-full object-cover "
           />
           <span class="ml-2 text-white font-[500]">{{ user.name || 'testuser' }}</span>
         </div>

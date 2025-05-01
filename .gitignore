@@ -38,3 +38,7 @@ venv
 # virtualenv
 .venv/
 venv/
+migrations/env.py
+migrations/alembic.ini
+
+migrations/script.py.mako
