@@ -2,8 +2,14 @@
      <!-- Navbar -->
     <NavigateBar />
 
+    
+
     <!-- User Profile Header -->
     <div class="min-h-screen  py-10 px-4 text-gray-800">
+      <!--New Profile Button-->
+          <router-link to="/profiles/new"class="absolute top-4 right-4 bg-rose-500 hover:bg-rose-600 text-white font-bold py-2 px-4 rounded shadow">
+            Create Profile
+          </router-link>
       <div class = "bg-white shadow-md rounded-lg p-6 mb-8">
         
       <div class="max-w-4xl mx-auto text-center mb-10">
