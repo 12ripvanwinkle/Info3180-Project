@@ -32,16 +32,20 @@
   });
 
   const router = useRouter();
+
+  function handleFileChange(event) {
+        formData.value.profilePic = event.target.files[0];
+}
   
   function register() {
     let registrationForm = document.getElementById('registrationForm');
-    let form_data = new FormData(registrationForm);
+    const form_data = new FormData(registrationForm);
 
-    form_data.append('username', formData.username);
-    form_data.append('email', formData.email);
-    form_data.append('name', formData.name);
-    form_data.append('password', formData.password);
-    form_data.append('profilePic', formData.profilePic);
+    form_data.append('username', formData.value.username);
+    form_data.append('email', formData.value.email);
+    form_data.append('name', formData.value.name);
+    form_data.append('password', formData.value.password);
+    form_data.append('photo', formData.value.profilePic);
 
     fetch('/api/register', {
       method: 'POST',
@@ -51,7 +55,7 @@
       if (!response.ok){
         throw new Error("Could not register");
       }
-      return response.json
+      return response.json();
     })
     .then(function (data) {
       console.log('Success:', data);
@@ -67,10 +71,7 @@
     .catch(function (error) {
       console.error('Error:', error)
     });
-  }; 
-  function handleFileChange(event) {
-        formData.profilePic = event.target.files[0];
-}
+  }
 </script>
   
 <style scoped lang="css">  
