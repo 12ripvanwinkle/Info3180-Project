@@ -53,7 +53,7 @@ import NavigateBar from '../components/NavigateBar.vue';
   onMounted(async () => {
     const profile_id = route.params.profile_id;
     try {
-      const res = await axios.get(`http://localhost:5000/api/profiles/matches/${profile_id}`, {
+      const res = await axios.get(`/api/profiles/matches/${profile_id}`, {
         headers: { Authorization: `Bearer ${getToken()}` }
       });
       matches.value = res.data;

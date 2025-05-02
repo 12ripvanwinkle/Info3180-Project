@@ -5,9 +5,11 @@ from app.config import Config
 from .models import db, User, Profile, Favourite  
 from flask_login import LoginManager
 from flask_jwt_extended import JWTManager
+from flask_cors import CORS
 
 app = Flask(__name__)
 app.config.from_object(Config)  
+CORS(app, supports_credentials=True)
 
 db.init_app(app)
 migrate = Migrate(app, db)
