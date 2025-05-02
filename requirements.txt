@@ -6,6 +6,7 @@ Flask-JWT-Extended
 Flask-Login
 Flask-Migrate
 Flask-SQLAlchemy
+flask-cors
 Flask-WTF
 greenlet
 gunicorn
