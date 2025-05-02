@@ -6,7 +6,7 @@
         <!-- Profile Display Section -->
         <div class="max-w-4xl mx-auto bg-white shadow-md rounded-lg p-6 mt-12 mb-8">
             <div class="text-center">
-                <img :src="getPhotoUrl(profile.photo)" alt="Profile Photo"
+                <img :src="getPhotoUrl(profile.user_photo)" alt="Profile Photo"
                     class="w-36 h-36 mx-auto rounded-full mb-4 border-4 border-rose-400"/>
                 <h1 class="text-3xl text-rose-600 font-pacifico font-semibold">{{ profile.name || 'User-NotFound' }}</h1>
                 <p class="text-gray-500 text-sm mt-2 font-pacifico">Profile Details</p>
@@ -23,7 +23,7 @@
                     <li><strong>Height:</strong> {{ profile.height }}</li>
                 </ul>
                 <ul class="space-y-1">
-                    <li><strong>Favourite Cuisine:</strong> {{ profile.fave_cuisine }}</li>
+                    <li><strong>Favourite Cuisine:</strong> {{ profile.fav_cuisine }}</li>
                     <li><strong>Favourite Colour:</strong> {{ profile.fav_colour }}</li>
                     <li><strong>Fav Subject:</strong> {{ profile.fav_school_subject }}</li>
                     <li><strong>Political:</strong> {{ profile.political ? 'Yes' : 'No' }}</li>
@@ -57,8 +57,8 @@ import NavigateBar from '../components/NavigateBar.vue';
     const profile = ref({});
 
     function getPhotoUrl(filename) {
-        return filename ? `/uploads/${filename}` : '';
-    }
+        return `/uploads/${filename}`;
+}
     onMounted(async () => {
         const id = route.params.profile_id;
         try {

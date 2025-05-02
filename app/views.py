@@ -198,9 +198,12 @@ def get_profiles():
         results = []
 
         for profile in profiles:
+            user = User.query.get(profile.user_id_fk)
             results.append({
                 'id': profile.id,
                 'user_id': profile.user_id_fk,
+                'user_name': user.name,
+                'user_photo': user.photo,
                 'description': profile.description,
                 'parish': profile.parish,
                 'biography': profile.biography,
@@ -229,10 +232,12 @@ def get_profile(profile_id):
 
         if not profile:
             return jsonify({'error': 'Profile not found'}), 404
-
+        user = User.query.get(profile.user_id_fk)
         profile_data = {
             'id': profile.id,
             'user_id': profile.user_id_fk,
+            'user_name': user.name,                     
+            'user_photo': user.photo,
             'description': profile.description,
             'parish': profile.parish,
             'biography': profile.biography,
