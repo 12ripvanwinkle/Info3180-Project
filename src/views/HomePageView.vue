@@ -33,7 +33,9 @@
                 </button>
             </form>
         </div>
-        
+
+        <hr class="border-t-2 border-dashed border-red-700 max-w-5xl mx-auto mb-10" />
+
         <!-- Search Results Section -->
         <div v-if="searchResults" class="max-w-5xl mx-auto mt-10">
             <h2 class="text-xl font-semibold text-gray-700 mb-4">Search Results</h2>
@@ -41,12 +43,10 @@
                 <div v-for="profile in searchResults" :key="profile.id" class="card-animate bg-white p-4 rounded-lg shadow hover:shadow-lg transition-transform duration-300 ease-in-out">
                     <img :src="getPhotoUrl(profile.user_photo)" alt="Profile Photo" class="w-full h-48 object-cover rounded mb-3"/>
                     <h3 class="text-lg font-bold font-ubuntu">{{ profile.user_name }}</h3>
-                    <router-link :to="`/profile/${profile.id}`" class="text-red-600 hover:underline mt-2 inline-block">View More Details</router-link>
+                    <router-link :to="`/profiles/${profile.id}`" class="text-red-600 hover:underline mt-2 inline-block">View More Details</router-link>
                 </div>
             </div>
         </div>
-
-        <hr class="border-t-2 border-dashed border-red-700 max-w-5xl mx-auto mb-10" />
 
         <!-- Recently Added Profiles Section -->
         <div class="max-w-5xl mx-auto">
