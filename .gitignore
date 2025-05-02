@@ -32,8 +32,8 @@ __pycache__
 venv
 
 # Environment Variables
-.env
-.flaskenv
+# .env
+# .flaskenv
 
 # virtualenv
 .venv/
