@@ -2,8 +2,14 @@
      <!-- Navbar -->
     <NavigateBar />
 
+    
+
     <!-- User Profile Header -->
     <div class="min-h-screen  py-10 px-4 text-gray-800">
+      <!--New Profile Button-->
+          <router-link to="/profiles/new"class="absolute top-4 right-4 bg-rose-500 hover:bg-rose-600 text-white font-bold py-2 px-4 rounded shadow">
+            Create Profile
+          </router-link>
       <div class = "bg-white shadow-md rounded-lg p-6 mb-8">
         
       <div class="max-w-4xl mx-auto text-center mb-10">
@@ -19,11 +25,12 @@
         <h2 class="text-4xl text-rose-500 font-pacifico mb-4">My Profiles</h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           <div v-for="profile in myProfiles" :key="profile.id" class="bg-white p-4 rounded shadow">
+            <img :src="getPhotoUrl(profile.user_photo)" alt="Profile Photo" class="w-full h-48 object-cover rounded mb-3" />
             <h3 class="font-bold text-lg mb-1">{{ user.name }}</h3>
             <p class="text-sm text-gray-600 font-ubuntu mb-2">{{ profile.biography.slice(0, 100) }}...</p>
             <div class="flex justify-between items-center">
-              <router-link :to="`/profiles/${profile.id}/matches`" class="text-sm text-blue-600 font-spacegrotesk hover:underline">Show More Details </router-link>
-              <router-link :to="`/profiles/${profile.id}`" class="bg-rose-400 hover:bg-rose-500 text-white px-3 py-1 font-spacegrotesk rounded text-sm"> Match Me  </router-link>
+              <router-link :to="`/profiles/${profile.id}`" class="text-sm text-blue-600 font-spacegrotesk hover:underline">Show More Details </router-link>
+              <router-link :to="`/profiles/${profile.id}/matches`" class="bg-rose-400 hover:bg-rose-500 text-white px-3 py-1 font-spacegrotesk rounded text-sm"> Match Me  </router-link>
             </div>
           </div>
         </div>

@@ -18,6 +18,7 @@
             </button>
         </router-link>
         </div>
+
         <!-- Search Profiles Section -->
          
         <div class="max-w-3xl mx-auto bg-white shadow-md rounded-lg p-6 mb-8">
@@ -40,9 +41,9 @@
             <h2 class="text-3xl my-5  font-pacifico text-rose-600 mb-4">Recently Added Profiles</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
                 <div v-for="profile in profiles" :key="profile.id" class="card-animate bg-white p-4 rounded-lg shadow hover:shadow-lg transition-transform duration-300 ease-in-out">
-                    <img :src="getPhotoUrl(profile.photo)" alt="Profile Photo" class="w-full h-48 object-cover rounded mb-3" />
+                    <img :src="getPhotoUrl(profile.user_photo)" alt="Profile Photo" class="w-full h-48 object-cover rounded mb-3" />
                     <h3 class="text-lg font-bold font-ubuntu">{{ profile.name }}</h3>
-                    <router-link :to="`/profile/${profile.id}`" class="text-red-600 hover:underline mt-2 inline-block">View More Details</router-link>
+                    <router-link :to="`/profiles/${profile.id}`" class="text-red-600 hover:underline mt-2 inline-block">View More Details</router-link>
                 </div>
             </div>
         </div>
@@ -67,6 +68,7 @@
   import { getToken } from '../utils/auth';
   import { ref, onMounted } from 'vue';
   import NavigateBar from '../components/NavigateBar.vue';
+  import { useRouter } from 'vue-router';
   
   const profiles = ref([]);
   const searchResults = ref([]);
@@ -76,6 +78,9 @@
     sex: '',
     race: ''
   });
+
+  const hasProfile = ref(false);
+  const router = useRouter();
 
   function getPhotoUrl(filename) {
     return `/uploads/${filename}`;
@@ -88,6 +93,15 @@
         });
         console.log("Profile API response:", res.data);
         profiles.value = res.data.profiles.slice(-4).reverse();
+
+        const userId = parseInt(localStorage.getItem('user_id')); 
+        const userProfiles = res.data.profiles.filter(p => p.user_id === userId);
+
+        if (userProfiles.length === 0) {
+            alert("You must create a profile before viewing others.");
+            router.push('/profiles/new'); 
+            return;
+        }
     }
     catch (error){
         console.error('Error:', error);
