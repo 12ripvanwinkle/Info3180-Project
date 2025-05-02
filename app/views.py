@@ -326,12 +326,18 @@ def search():
     if not name and not birth_year and not sex and not race:
         return jsonify({'error': 'No search parameters provided'}), 400
 
-    query =  Profile.query.join(User).filter(
-        (User.name == name ) if name else True,
-        (Profile.birth_year == birth_year) if birth_year else True,
-        (Profile.sex == sex ) if sex else True,
-        (Profile.race ==race) if race else True
-    ).all()
+    filters = []
+
+    if name:
+        filters.append(User.name == name)
+    if birth_year:
+        filters.append(Profile.birth_year == birth_year)
+    if sex:
+        filters.append(Profile.sex == sex)
+    if race:
+        filters.append(Profile.race == race)
+
+    query = Profile.query.join(User).filter(*filters).all()
 
     found_profiles = []
     for profile in query:
@@ -393,7 +399,8 @@ def get_user_favourites(user_id):
                 'id': fav_user.id,
                 'name': fav_user.name,
                 'email': fav_user.email,
-                'password': fav_user.password
+                'password': fav_user.password,
+                'photo': fav_user.photo
             })
 
         return jsonify(favourites_user_data), 200
