@@ -107,7 +107,6 @@ def login():
                     'email': user.email,
                     'name': user.name,
                     'photo': user.photo
-                    # add more fields if needed
                 }
             }), 200
         else:
