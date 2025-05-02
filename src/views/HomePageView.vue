@@ -33,6 +33,18 @@
                 </button>
             </form>
         </div>
+        
+        <!-- Search Results Section -->
+        <div v-if="searchResults" class="max-w-5xl mx-auto mt-10">
+            <h2 class="text-xl font-semibold text-gray-700 mb-4">Search Results</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                <div v-for="profile in searchResults" :key="profile.id" class="card-animate bg-white p-4 rounded-lg shadow hover:shadow-lg transition-transform duration-300 ease-in-out">
+                    <img :src="getPhotoUrl(profile.user_photo)" alt="Profile Photo" class="w-full h-48 object-cover rounded mb-3"/>
+                    <h3 class="text-lg font-bold font-ubuntu">{{ profile.user_name }}</h3>
+                    <router-link :to="`/profile/${profile.id}`" class="text-red-600 hover:underline mt-2 inline-block">View More Details</router-link>
+                </div>
+            </div>
+        </div>
 
         <hr class="border-t-2 border-dashed border-red-700 max-w-5xl mx-auto mb-10" />
 
@@ -42,23 +54,12 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
                 <div v-for="profile in profiles" :key="profile.id" class="card-animate bg-white p-4 rounded-lg shadow hover:shadow-lg transition-transform duration-300 ease-in-out">
                     <img :src="getPhotoUrl(profile.user_photo)" alt="Profile Photo" class="w-full h-48 object-cover rounded mb-3" />
-                    <h3 class="text-lg font-bold font-ubuntu">{{ profile.name }}</h3>
+                    <h3 class="text-lg font-bold font-ubuntu">{{ profile.user_name }}</h3>
                     <router-link :to="`/profiles/${profile.id}`" class="text-red-600 hover:underline mt-2 inline-block">View More Details</router-link>
                 </div>
             </div>
         </div>
 
-        <!-- Search Results Section -->
-        <div v-if="searchResults.length" class="max-w-5xl mx-auto mt-10">
-            <h2 class="text-xl font-semibold text-gray-700 mb-4">Search Results</h2>
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                <div v-for="profile in searchResults" :key="profile.id" class="card-animate bg-white p-4 rounded-lg shadow hover:shadow-lg transition-transform duration-300 ease-in-out">
-                    <img :src="getPhotoUrl(profile.photo)" alt="Profile Photo" class="w-full h-48 object-cover rounded mb-3"/>
-                    <h3 class="text-lg font-bold font-ubuntu">{{ profile.name }}</h3>
-                    <router-link :to="`/profile/${profile.id}`" class="text-red-600 hover:underline mt-2 inline-block">View More Details</router-link>
-                </div>
-            </div>
-        </div>
     </div>
 </template>
 
@@ -115,6 +116,7 @@
             params: search.value
         });
         searchResults.value = res.data;
+        console.log(res.data);
         }
         catch (error) {
             console.error('Error:', error);

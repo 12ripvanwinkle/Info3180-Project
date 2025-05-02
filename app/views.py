@@ -319,10 +319,10 @@ def get_profile_matches(profile_id):
 
 @app.route("/api/search", methods=["GET"])
 def search():
-    name = request.form.get('name')
-    birth_year = request.form.get('birth_year')
-    sex = request.form.get('sex')
-    race = request.form.get('race')
+    name = request.args.get('name')
+    birth_year = request.args.get('birth_year')
+    sex = request.args.get('sex')
+    race = request.args.get('race')
 
     if not name and not birth_year and not sex and not race:
         return jsonify({'error': 'No search parameters provided'}), 400
@@ -336,10 +336,12 @@ def search():
 
     found_profiles = []
     for profile in query:
-    
+        user = User.query.get(profile.user_id_fk)
         found_profiles.append({
             'id': profile.id,
             'user_id': profile.user_id_fk,
+            'user_name': user.name,                     
+            'user_photo': user.photo,
             'description': profile.description,
             'parish': profile.parish,
             'biography': profile.biography,

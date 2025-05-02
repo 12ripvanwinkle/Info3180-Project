@@ -8,7 +8,7 @@
             <div class="text-center">
                 <img :src="getPhotoUrl(profile.user_photo)" alt="Profile Photo"
                     class="w-36 h-36 mx-auto rounded-full mb-4 border-4 border-rose-400"/>
-                <h1 class="text-3xl text-rose-600 font-pacifico font-semibold">{{ profile.name || 'User-NotFound' }}</h1>
+                <h1 class="text-3xl text-rose-600 font-pacifico font-semibold">{{ profile.user_name || 'User-NotFound' }}</h1>
                 <p class="text-gray-500 text-sm mt-2 font-pacifico">Profile Details</p>
             </div>
 
