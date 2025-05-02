@@ -15,7 +15,11 @@
           <input v-model="form.description" placeholder="Description" required class="input" />
           <input v-model="form.parish" placeholder="Parish" required class="input" />
           <textarea v-model="form.biography" placeholder="Biography" required class="input h-24"></textarea>
-          <input v-model="form.sex" placeholder="Sex" required class="input" />
+          <select v-model="form.sex" required class="input">
+            <option disabled value="">Select Sex</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+          </select>
           <input v-model="form.race" placeholder="Race" required class="input" />
           <input v-model="form.birth_year" type="number" placeholder="Birth Year" required class="input" />
           <input v-model="form.height" type="number" placeholder="Height (inches)" required class="input" />
