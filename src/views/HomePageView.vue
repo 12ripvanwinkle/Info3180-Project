@@ -25,9 +25,22 @@
             <h2 class="text-xl font-regular mb-4 text-gray-700 font-pacifico">Search for your Match</h2>
             <form method="GET" @submit.prevent="searchProfiles" class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <input v-model="search.name" type="text" placeholder="Name" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 font-pacifico focus:ring-rose-600"/>
-                <input v-model="search.birth_year" type="text" placeholder="Birth Year" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 font-pacifico focus:ring-rose-600"/>
-                <input v-model="search.sex" type="text" placeholder="Sex" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 font-pacifico focus:ring-rose-600"/>
-                <input v-model="search.race" type="text" placeholder="Race" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 font-pacifico focus:ring-rose-600"/>
+                <select v-model="search.birth_year" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 font-pacifico focus:ring-rose-600">
+                    <option disabled value="">Select Birth Year</option>
+                    <option v-for="year in birthYears" :key="year" :value="year">{{ year }}</option>
+                </select>
+                <select v-model="search.sex" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 font-pacifico focus:ring-rose-600">
+                    <option disabled value="">Select Sex</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
+                <select v-model="search.race" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 font-pacifico focus:ring-rose-600">
+                    <option disabled value="">Select Race</option>
+                    <option value="Asian">Asian</option>
+                    <option value="Black">Black</option>
+                    <option value="White">White</option>
+                    <option value="Hispanic">Hispanic</option>
+                </select> 
                 <button type="submit" class="col-span-full bg-rose-500 hover:bg-rose-600 text-white  py-2 rounded-md focus:outline-none focus:ring-2 font-pacifico focus:ring-rose-700">
                     Search
                 </button>
@@ -86,6 +99,12 @@
   function getPhotoUrl(filename) {
     return `/uploads/${filename}`;
   }
+
+    const currentYear = new Date().getFullYear();
+    const minYear = currentYear - 50; // Age 50
+    const maxYear = currentYear - 18; // Age 18
+    birthYears.value = Array.from({ length: maxYear - minYear + 1 }, (_, i) => minYear + i);
+
 
   onMounted(async () => {
     try {
