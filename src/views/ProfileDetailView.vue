@@ -58,13 +58,7 @@
     const profile = ref({});
 
     function getPhotoUrl(filename) {
-        if (!filename || filename === 'undefined') {
-             return defaultProfileImage;
-        }
-        if (filename.startsWith('http://') || filename.startsWith('https://')) {
-            return filename;
-        }
-        return `/static/uploads/${filename}`;
+        return `/uploads/${filename}`;
     }
     onMounted(async () => {
         const id = route.params.profile_id;

@@ -9,7 +9,7 @@ class Config(object):
     """Base Config Object"""
     DEBUG = False
     SECRET_KEY = os.environ.get('SECRET_KEY', 'Som3$ec5etK*y')
-    UPLOAD_FOLDER = os.path.join(basedir, 'app/static/uploads')
+    UPLOAD_FOLDER = os.environ.get('UPLOAD_FOLDER')
 
     # Ensure DATABASE_URL is set in .env and use PostgreSQL URI format
     SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL')
