@@ -35,6 +35,10 @@ def index():
 def assests(filename):
      return send_from_directory(os.path.join(app.static_folder, "assets"), filename)
 
+@app.route('/uploads/<filename>')
+def uploaded_file(filename):
+    return send_from_directory('uploads', filename)
+
 @app.route('/favicon.ico')
 def favicon():
     return send_from_directory(app.static_folder, 'favicon.ico')

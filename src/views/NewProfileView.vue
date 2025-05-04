@@ -13,7 +13,6 @@
         <!-- Left Side -->
         <div class="space-y-3">
           <input v-model="form.description" placeholder="Description" required class="input" />
-          <input v-model="form.description" placeholder="Description" required class="input" />
         <input v-model="form.parish" placeholder="Parish" required class="input" />
         <textarea v-model="form.biography" placeholder="Biography" required class="input h-24"></textarea>
         <select v-model="form.sex" required class="input">
@@ -117,6 +116,7 @@
   import NavigateBar from '../components/NavigateBar.vue';
   
   const router = useRouter();
+  const birthYears = ref([]);
   
   const currentYear = new Date().getFullYear();
   const minYear = currentYear - 50; 
