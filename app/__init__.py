@@ -7,7 +7,7 @@ from flask_login import LoginManager
 from flask_jwt_extended import JWTManager
 from flask_cors import CORS
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder="static", static_url_path="/")
 app.config.from_object(Config)  
 CORS(app, supports_credentials=True)
 

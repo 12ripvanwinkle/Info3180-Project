@@ -6,7 +6,7 @@ This file creates your application.
 """
 
 from app import app, db
-from flask import render_template, request, jsonify, send_file, session, Flask
+from flask import render_template, send_from_directory, request, jsonify, send_file, session, Flask
 import os
 from .models import User, Profile, Favourite 
 from datetime import datetime
@@ -29,11 +29,15 @@ def allowed_file(filename):
 # for this I used form-data and not raw->json in postman
 @app.route('/')
 def index():
-    return app.send_static_file('index.html')
+    return send_from_directory(app.static_folder, "index.html")
 
 @app.route('/assets/<path:filename>')
 def assests(filename):
-    return app.send_static_file(os.path.join('assests', filename))
+     return send_from_directory(os.path.join(app.static_folder, "assets"), filename)
+
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(app.static_folder, 'favicon.ico')
 
 @app.route('/api/register', methods=['POST'])
 def register_user():
