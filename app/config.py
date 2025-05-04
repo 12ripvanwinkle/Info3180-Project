@@ -10,6 +10,6 @@ class Config(object):
     UPLOAD_FOLDER = os.environ.get('UPLOAD_FOLDER')
 
     # Ensure DATABASE_URL is set in .env and use PostgreSQL URI format
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL', '').replace('postgres://', 'postgresql://')
+    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL')
 
     SQLALCHEMY_TRACK_MODIFICATIONS = False  # To suppress the warning, and as it is deprecated
