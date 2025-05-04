@@ -31,7 +31,7 @@ def allowed_file(filename):
 def index():
     return app.send_static_file('index.html')
 
-@app.route('/assests/<path:filename>')
+@app.route('/assets/<path:filename>')
 def assests(filename):
     return app.send_static_file(os.path.join('assests', filename))
 
@@ -415,7 +415,7 @@ def get_user_favourites(user_id):
     except Exception as e:
         return jsonify({'error': f'Something went wrong: {str(e)}'}), 500
     
-@app.route("/api/users/favourties/<int:N>", methods=["GET"])
+@app.route("/api/users/favourites/<int:N>", methods=["GET"])
 def most_favourite_users(N):
     try:
         users = db.session.query(User).\
