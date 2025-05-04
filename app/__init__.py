@@ -1,4 +1,5 @@
 from flask import Flask,jsonify
+import os
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from app.config import Config
@@ -12,7 +13,7 @@ app.config.from_object(Config)
 
 print("UPLOAD_FOLDER:", app.config['UPLOAD_FOLDER'])
 CORS(app, supports_credentials=True)
-
+print(os.listdir("uploads"))
 db.init_app(app)
 migrate = Migrate(app, db)
 
