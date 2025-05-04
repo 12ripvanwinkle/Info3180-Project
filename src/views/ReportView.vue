@@ -46,6 +46,7 @@
   import axios from 'axios';
   import { getToken } from '../utils/auth';
   import NavigateBar from '../components/NavigateBar.vue';
+  import defaultProfileImage from '@/assets/Default/noProfile.png';
   
   const topFavorites = ref([]);
   const myFavorites = ref([]);
@@ -54,7 +55,13 @@
   const sortOption = ref('name');
   
   function getPhotoUrl(filename) {
-    return `https://jamdate-vue.onrender.com/static/uploads/${filename}`;
+        if (!filename || filename === 'undefined') {
+             return defaultProfileImage;
+        }
+        if (filename.startsWith('http://') || filename.startsWith('https://')) {
+            return filename;
+        }
+        return `/static/uploads/${filename}`;
   }
   
   function sortLists() {

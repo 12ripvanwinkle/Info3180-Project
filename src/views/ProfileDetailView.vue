@@ -51,17 +51,21 @@
     import { useRoute } from 'vue-router';
     import axios from 'axios';
     import { getToken } from '../utils/auth';
-import NavigateBar from '../components/NavigateBar.vue';
+    import NavigateBar from '../components/NavigateBar.vue';
+    import defaultProfileImage from '@/assets/Default/noProfile.png';
 
     const route = useRoute();
     const profile = ref({});
 
     function getPhotoUrl(filename) {
-  if (!filename || filename === 'undefined') {
-    return '/default/path/to/fallback.jpg'; 
-  }
-  return `https://jamdate-vue.onrender.com/static/uploads/${filename}`;
-}
+        if (!filename || filename === 'undefined') {
+             return defaultProfileImage;
+        }
+        if (filename.startsWith('http://') || filename.startsWith('https://')) {
+            return filename;
+        }
+        return `/static/uploads/${filename}`;
+    }
     onMounted(async () => {
         const id = route.params.profile_id;
         try {
