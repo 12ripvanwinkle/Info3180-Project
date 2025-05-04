@@ -33,7 +33,7 @@ def index():
 def assests(filename):
      return send_from_directory(os.path.join(app.static_folder, "assets"), filename)
 
-@app.route('/static/uploads/<filename>')
+@app.route('/static/uploads/<path:filename>')
 def uploaded_file(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 

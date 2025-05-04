@@ -62,7 +62,7 @@
   if (filename.startsWith('http://') || filename.startsWith('https://')) {
     return filename;
   }
-  return `https://jamdate-flask.onrender.com/static/uploads/${filename}`;
+  return `https://jamdate-vue.onrender.com/static/uploads/${filename}`;
 }
 </script>
 

@@ -54,7 +54,7 @@
   const sortOption = ref('name');
   
   function getPhotoUrl(filename) {
-    return `https://jamdate-flask.onrender.com/static/uploads/${filename}`;
+    return `https://jamdate-vue.onrender.com/static/uploads/${filename}`;
   }
   
   function sortLists() {

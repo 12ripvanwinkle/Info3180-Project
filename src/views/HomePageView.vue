@@ -98,7 +98,7 @@
   const birthYears = ref([]);
 
   function getPhotoUrl(filename) {
-    return `/uploads/${filename}`;
+    return `https://jamdate-vue.onrender.com/static/uploads/${filename}`;
   }
 
   function generateBirthYears() {
