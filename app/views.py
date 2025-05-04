@@ -21,6 +21,7 @@ from flask_jwt_extended import create_access_token
 
 # Ensure your app is configured with the upload folder
 
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
@@ -33,7 +34,7 @@ def index():
 def assests(filename):
      return send_from_directory(os.path.join(app.static_folder, "assets"), filename)
 
-@app.route('/static/uploads/<path:filename>')
+@app.route('/uploads/<path:filename>')
 def uploaded_file(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
