@@ -20,8 +20,6 @@ from flask_jwt_extended import create_access_token
 ###
 
 # Ensure your app is configured with the upload folder
-UPLOAD_FOLDER = os.path.join(os.getcwd(), 'uploads')
-ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -35,9 +33,9 @@ def index():
 def assests(filename):
      return send_from_directory(os.path.join(app.static_folder, "assets"), filename)
 
-@app.route('/uploads/<filename>')
+@app.route("/uploads/<filename>")
 def uploaded_file(filename):
-    return send_from_directory('uploads', filename)
+    return send_from_directory(app.config["UPLOAD_FOLDER"], filename)
 
 @app.route('/favicon.ico')
 def favicon():
@@ -68,10 +66,10 @@ def register_user():
 
     # Save photo
     filename = secure_filename(photo.filename)
-    photo_path = os.path.join(UPLOAD_FOLDER, filename)
+    photo_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
     try:
-        if not os.path.exists(UPLOAD_FOLDER):
-            os.makedirs(UPLOAD_FOLDER)
+        if not os.path.exists(app.config['UPLOAD_FOLDER']):
+            os.makedirs(app.config['UPLOAD_FOLDER'])
         photo.save(photo_path)
     except Exception as e:
         print("Photo save error:", e)

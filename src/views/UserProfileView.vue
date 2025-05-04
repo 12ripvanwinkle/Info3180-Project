@@ -56,6 +56,7 @@ import { useRoute } from 'vue-router';
 import axios from 'axios';
 import { getToken } from '../utils/auth';
 import NavigateBar from '../components/NavigateBar.vue';
+import defaultProfileImage from '@/assets/Default/noProfile.png';
 
 const route = useRoute();
 const user = ref({});
@@ -63,7 +64,10 @@ const myProfiles = ref([]);
 const favourites = ref([]);
 
 function getPhotoUrl(filename) {
-  return filename ? `/uploads/${filename}` : '';
+  if (!filename || filename === 'undefined') {
+    return '/default/path/to/fallback.jpg'; 
+  }
+  return `/uploads/${filename}`; 
 }
 onMounted(async () => {
     try{

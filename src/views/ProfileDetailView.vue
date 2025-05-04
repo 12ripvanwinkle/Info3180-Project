@@ -57,7 +57,10 @@ import NavigateBar from '../components/NavigateBar.vue';
     const profile = ref({});
 
     function getPhotoUrl(filename) {
-        return `/uploads/${filename}`;
+  if (!filename || filename === 'undefined') {
+    return '/default/path/to/fallback.jpg'; 
+  }
+  return `/uploads/${filename}`; 
 }
     onMounted(async () => {
         const id = route.params.profile_id;
