@@ -27,6 +27,14 @@ def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 # for this I used form-data and not raw->json in postman
+@app.route('/')
+def index():
+    return app.send_static_file('index.html')
+
+@app.route('/assests/<path:filename>')
+def assests(filename):
+    return app.send_static_file(os.path.join('assests', filename))
+
 @app.route('/api/register', methods=['POST'])
 def register_user():
     # Get user form fields
@@ -429,11 +437,6 @@ def most_favourite_users(N):
     except Exception as e:
         return jsonify({'error': f'Something went wrong: {str(e)}'}), 500
 
-
-
-@app.route('/')
-def index():
-    return jsonify(message="This is the beginning of our API")
 
 
 ###
