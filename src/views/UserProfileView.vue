@@ -67,7 +67,7 @@ function getPhotoUrl(filename) {
   if (!filename || filename === 'undefined') {
     return '/default/path/to/fallback.jpg'; 
   }
-  return `/uploads/${filename}`; 
+  return `/static/uploads/${filename}`;
 }
 onMounted(async () => {
     try{

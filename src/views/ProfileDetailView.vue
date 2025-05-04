@@ -60,7 +60,7 @@ import NavigateBar from '../components/NavigateBar.vue';
   if (!filename || filename === 'undefined') {
     return '/default/path/to/fallback.jpg'; 
   }
-  return `/uploads/${filename}`; 
+  return `/static/uploads/${filename}`; 
 }
     onMounted(async () => {
         const id = route.params.profile_id;

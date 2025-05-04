@@ -54,7 +54,7 @@
   const sortOption = ref('name');
   
   function getPhotoUrl(photo) {
-    return photo ? `/uploads/${photo}` : '';
+    return `/static/uploads/${photo}`;
   }
   
   function sortLists() {

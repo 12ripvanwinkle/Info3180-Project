@@ -62,7 +62,7 @@
   if (filename.startsWith('http://') || filename.startsWith('https://')) {
     return filename;
   }
-  return `/uploads/${filename}`;
+  return `/static/uploads/${filename}`;
 }
 </script>
 
