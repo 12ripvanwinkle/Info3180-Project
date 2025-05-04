@@ -60,7 +60,7 @@ import NavigateBar from '../components/NavigateBar.vue';
   if (!filename || filename === 'undefined') {
     return '/default/path/to/fallback.jpg'; 
   }
-  return `/static/uploads/${filename}`; 
+  return `https://jamdate-flask.onrender.com/static/uploads/${filename}`;
 }
     onMounted(async () => {
         const id = route.params.profile_id;

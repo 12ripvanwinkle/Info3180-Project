@@ -67,7 +67,7 @@ function getPhotoUrl(filename) {
   if (!filename || filename === 'undefined') {
     return '/default/path/to/fallback.jpg'; 
   }
-  return `/static/uploads/${filename}`;
+  return `https://jamdate-flask.onrender.com/static/uploads/${filename}`;
 }
 onMounted(async () => {
     try{

@@ -53,8 +53,8 @@
   const sortedMine = ref([]);
   const sortOption = ref('name');
   
-  function getPhotoUrl(photo) {
-    return `/static/uploads/${photo}`;
+  function getPhotoUrl(filename) {
+    return `https://jamdate-flask.onrender.com/static/uploads/${filename}`;
   }
   
   function sortLists() {
@@ -72,7 +72,7 @@
   onMounted(async () => {
     try {
       // Top N favorites
-      const topRes = await axios.get('/api/users/favorities/20');
+      const topRes = await axios.get('/api/users/favorites/20');
       topFavorites.value = topRes.data;
       sortedTop.value = topRes.data;
   

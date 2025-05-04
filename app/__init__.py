@@ -9,6 +9,7 @@ from flask_cors import CORS
 
 app = Flask(__name__, static_folder="static", static_url_path="/")
 app.config.from_object(Config)  
+
 print("UPLOAD_FOLDER:", app.config['UPLOAD_FOLDER'])
 CORS(app, supports_credentials=True)
 
