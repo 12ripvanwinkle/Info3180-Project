@@ -154,7 +154,7 @@ def create_profile():
             sex=data['sex'],
             race=data['race'],
             birth_year=int(data['birth_year']),
-            height=float(data['height']),
+            height= data['height'],
             fav_cuisine=data['fav_cuisine'],
             fav_colour=data['fav_colour'],
             fav_school_subject=data['fav_school_subject'],
