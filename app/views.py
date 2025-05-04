@@ -36,7 +36,10 @@ def assests(filename):
 
 @app.route('/uploads/<path:filename>')
 def uploaded_file(filename):
+    full_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+    print(f"Trying to serve: {full_path}")
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+
 
 @app.route('/favicon.ico')
 def favicon():

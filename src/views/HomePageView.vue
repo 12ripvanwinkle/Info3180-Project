@@ -99,7 +99,7 @@
   const birthYears = ref([]);
 
   function getPhotoUrl(filename) {
-        return `uploads/${filename}`;
+        return `/uploads/${filename}`;
     }
 
   function generateBirthYears() {
