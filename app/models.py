@@ -31,7 +31,7 @@ class Profile(db.Model):
     sex = db.Column(db.String(20))
     race = db.Column(db.String(50))
     birth_year = db.Column(db.Integer)
-    height = db.Column(db.Float)
+    height = db.Column(db.String(10))
     fav_cuisine = db.Column(db.String(100))
     fav_colour = db.Column(db.String(50))
     fav_school_subject = db.Column(db.String(100))
