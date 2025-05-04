@@ -95,18 +95,21 @@
 
   const hasProfile = ref(false);
   const router = useRouter();
+  const birthYears = ref([]);
 
   function getPhotoUrl(filename) {
     return `/uploads/${filename}`;
   }
 
+  function generateBirthYears() {
     const currentYear = new Date().getFullYear();
-    const minYear = currentYear - 50; // Age 50
-    const maxYear = currentYear - 18; // Age 18
+    const minYear = currentYear - 50;
+    const maxYear = currentYear - 18;
     birthYears.value = Array.from({ length: maxYear - minYear + 1 }, (_, i) => minYear + i);
-
+}
 
   onMounted(async () => {
+    generateBirthYears();
     try {
         const res = await axios.get('/api/profiles', {
             headers: {Authorization: `Bearer ${getToken()}`}
