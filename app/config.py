@@ -7,7 +7,7 @@ class Config(object):
     """Base Config Object"""
     DEBUG = False
     SECRET_KEY = os.environ.get('SECRET_KEY', 'Som3$ec5etK*y')
-    UPLOAD_FOLDER = os.path.join(os.getcwd(), 'uploads')
+    UPLOAD_FOLDER = os.path.join(os.getcwd(), 'static', 'uploads')
     ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
     # Ensure DATABASE_URL is set in .env and use PostgreSQL URI format
