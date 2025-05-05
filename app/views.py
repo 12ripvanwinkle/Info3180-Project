@@ -46,8 +46,8 @@ def uploaded_file(filename):
         except Exception as e:
             return f"<error: {e}>"
 
-    project_src = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir, os.pardir))
-    app_dir     = os.path.abspath(os.path.join(os.path.dirname(__file__)))
+    project_src = os.getcwd()
+    app_dir     =  os.path.join(project_src, 'app')
     static_dir  = os.path.join(app_dir, 'static')
 
     print("📂 project/src contents:", list_dir(project_src))
