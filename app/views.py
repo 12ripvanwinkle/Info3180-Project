@@ -38,7 +38,6 @@ def assests(filename):
 def uploaded_file(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
-
 @app.route('/favicon.ico')
 def favicon():
     return send_from_directory(app.static_folder, 'favicon.ico')
@@ -62,20 +61,17 @@ def register_user():
     if User.query.filter_by(email=email).first():
         return jsonify({'error': 'Email already exists.'}), 409
 
-    # Validate photo
+    # Save photo
+    photo = request.files.get('photo')
     if photo.filename == '' or not allowed_file(photo.filename):
         return jsonify({'error': 'Invalid or missing photo file.'}), 400
 
-    # Save photo
     filename = secure_filename(photo.filename)
     photo_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-    try:
-        if not os.path.exists(app.config['UPLOAD_FOLDER']):
-            os.makedirs(app.config['UPLOAD_FOLDER'])
-        photo.save(photo_path)
-    except Exception as e:
-        print("Photo save error:", e)
-        return jsonify({'error': 'Failed to save photo.'}), 500
+    if not os.path.exists(app.config['UPLOAD_FOLDER']):
+        os.makedirs(app.config['UPLOAD_FOLDER'])
+    photo.save(photo_path)
+
 
     # Hash the password
     hashed_password = generate_password_hash(password)
@@ -439,6 +435,7 @@ def most_favourite_users(N):
                 'name': user.name,
                 'email': user.email,
                 'password': user.password,
+                'photo': user.photo,
             })
 
         return jsonify(users_data), 200

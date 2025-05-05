@@ -6,7 +6,7 @@
         <!-- Profile Display Section -->
         <div class="max-w-4xl mx-auto bg-white shadow-md rounded-lg p-6 mt-12 mb-8">
             <div class="text-center">
-                <img :src="getPhotoUrl(profile.user_photo)" alt="Profile Photo"
+                <img :src="`${API_BASE}/uploads/${profile.user_photo}`" alt="Profile Photo"
                     class="w-36 h-36 mx-auto rounded-full mb-4 border-4 border-rose-400"/>
                 <h1 class="text-3xl text-rose-600 font-pacifico font-semibold">{{ profile.user_name || 'User-NotFound' }}</h1>
                 <p class="text-gray-500 text-sm mt-2 font-pacifico">Profile Details</p>
@@ -53,13 +53,11 @@
     import { getToken } from '../utils/auth';
     import NavigateBar from '../components/NavigateBar.vue';
     import defaultProfileImage from '@/assets/Default/noProfile.png';
+    const API_BASE = import.meta.env.VITE_API_BASE || 'http://0.0.0.0:10000';
 
     const route = useRoute();
     const profile = ref({});
 
-    function getPhotoUrl(filename) {
-        return `/uploads/${filename}`;
-    }
     onMounted(async () => {
         const id = route.params.profile_id;
         try {

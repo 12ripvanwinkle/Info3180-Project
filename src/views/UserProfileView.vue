@@ -25,7 +25,7 @@
         <h2 class="text-4xl text-rose-500 font-pacifico mb-4">My Profiles</h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           <div v-for="profile in myProfiles" :key="profile.id" class="bg-white p-4 rounded shadow">
-            <img :src="getPhotoUrl(profile.user_photo)" alt="Profile Photo" class="w-full h-48 object-cover rounded mb-3" />
+            <img :src="`${API_BASE}/uploads/${profile.user_photo}`" alt="Profile Photo" class="w-full h-48 object-cover rounded mb-3" />
             <h3 class="font-bold text-lg mb-1">{{ user.name }}</h3>
             <p class="text-sm text-gray-600 font-ubuntu mb-2">{{ profile.biography.slice(0, 100) }}...</p>
             <div class="flex justify-between items-center">
@@ -39,7 +39,7 @@
         <h2 class="text-4xl text-rose-500 font-pacifico mb-4">Users I Favorited</h2>
         <div v-if="favourites.length" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           <div v-for="fav in favourites" :key="fav.id" class="bg-white p-4 rounded shadow text-center">
-            <img :src="getPhotoUrl(fav.photo)" alt="Fav User" class="w-24 h-24 rounded-full mx-auto mb-2 border" />
+            <img :src="`${API_BASE}/uploads/${fav.photo}`" alt="Fav User" class="w-24 h-24 rounded-full mx-auto mb-2 border" />
             <h3 class="text-lg font-bold">{{ fav.name }}</h3>
             <p class="text-sm text-gray-500">{{ fav.email }}</p>
           </div>
@@ -57,15 +57,13 @@ import axios from 'axios';
 import { getToken } from '../utils/auth';
 import NavigateBar from '../components/NavigateBar.vue';
 import defaultProfileImage from '@/assets/Default/noProfile.png';
+const API_BASE = import.meta.env.VITE_API_BASE || 'http://0.0.0.0:10000';
 
 const route = useRoute();
 const user = ref({});
 const myProfiles = ref([]);
 const favourites = ref([]);
 
-function getPhotoUrl(filename) {
-  return `/uploads/${filename}`;
-}
 onMounted(async () => {
     try{
         const userId = parseInt(localStorage.getItem('user_id'));

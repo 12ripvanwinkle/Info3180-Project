@@ -54,7 +54,7 @@
             <h2 class="text-xl font-semibold text-gray-700 mb-4">Search Results</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                 <div v-for="profile in searchResults" :key="profile.id" class="card-animate bg-white p-4 rounded-lg shadow hover:shadow-lg transition-transform duration-300 ease-in-out">
-                    <img :src="getPhotoUrl(profile.user_photo)" alt="Profile Photo" class="w-full h-48 object-cover rounded mb-3"/>
+                    <img :src="`${API_BASE}/uploads/${user.photo}`" alt="Profile Photo" class="w-full h-48 object-cover rounded mb-3"/>
                     <h3 class="text-lg font-bold font-ubuntu">{{ profile.user_name }}</h3>
                     <router-link :to="`/profiles/${profile.id}`" class="text-red-600 hover:underline mt-2 inline-block">View More Details</router-link>
                 </div>
@@ -84,6 +84,7 @@
   import NavigateBar from '../components/NavigateBar.vue';
   import { useRouter } from 'vue-router';
   import defaultProfileImage from '@/assets/Default/noProfile.png';
+  const API_BASE = import.meta.env.VITE_API_BASE || 'http://0.0.0.0:10000';
   
   const profiles = ref([]);
   const searchResults = ref([]);
@@ -97,10 +98,6 @@
   const hasProfile = ref(false);
   const router = useRouter();
   const birthYears = ref([]);
-
-  function getPhotoUrl(filename) {
-        return `/uploads/${filename}`;
-    }
 
   function generateBirthYears() {
     const currentYear = new Date().getFullYear();
