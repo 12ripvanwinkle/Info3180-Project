@@ -36,7 +36,14 @@ def assests(filename):
 
 @app.route('/uploads/<path:filename>')
 def uploaded_file(filename):
-    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+    # DEBUG: print the upload folder and its contents
+    upload_dir = app.config['UPLOAD_FOLDER']
+    print(f"🛠️  UPLOAD_FOLDER = {upload_dir}")
+    try:
+        print("🛠️  contains:", os.listdir(upload_dir))
+    except Exception as e:
+        print("🛠️  os.listdir error:", e)
+    return send_from_directory(upload_dir, filename)
 
 @app.route('/favicon.ico')
 def favicon():
