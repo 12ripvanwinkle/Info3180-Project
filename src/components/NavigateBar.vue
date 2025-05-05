@@ -33,7 +33,7 @@
  import { ref, onMounted } from 'vue';
  const userId = localStorage.getItem('user_id');
  const showDropdown = ref(false);
- import defaultProfileImage from '@/assets/Default/noProfile.png';
+ import { photoUrl } from '../utils/urls.js';
 
  const user = ref({
     name: '',
