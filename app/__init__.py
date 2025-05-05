@@ -13,7 +13,6 @@ app.config.from_object(Config)
 
 print("UPLOAD_FOLDER:", app.config['UPLOAD_FOLDER'])
 CORS(app, supports_credentials=True)
-print(os.listdir(app.config['UPLOAD_FOLDER']))
 db.init_app(app)
 migrate = Migrate(app, db)
 
