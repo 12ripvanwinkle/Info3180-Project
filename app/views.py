@@ -55,7 +55,8 @@ def uploaded_file(filename):
     print("📂 app/static contents:", list_dir(static_dir))
     print("📂 app/static/uploads contents:", list_dir(upload_dir))
 
-    return send_from_directory(upload_dir, filename)
+    return send_from_directory(os.path.join(app.static_folder, "uploads"), filename)
+
 
 @app.route('/favicon.ico')
 def favicon():
