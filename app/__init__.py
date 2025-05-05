@@ -8,7 +8,13 @@ from flask_login import LoginManager
 from flask_jwt_extended import JWTManager
 from flask_cors import CORS
 
-app = Flask(__name__, static_folder="static", static_url_path="/")
+
+BASEDIR = os.path.abspath(os.path.dirname(__file__))
+app = Flask(
+    __name__,
+    static_folder=os.path.join(BASEDIR, 'static'),
+    static_url_path='/static'
+)
 app.config.from_object(Config)  
 
 print("UPLOAD_FOLDER:", app.config['UPLOAD_FOLDER'])
