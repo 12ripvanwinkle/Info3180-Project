@@ -20,7 +20,7 @@
         <h2 class="text-3xl text-white font-pacifico mb-4 ">Top 20 Most Favorited Users</h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
           <div v-for="user in sortedTop" :key="user.id" class="bg-gray-100 p-4 rounded shadow text-center">
-            <img :src="`${API_BASE}/uploads/${user.photo}`" alt="User" class="w-20 h-20 mx-auto rounded-full mb-2" />
+            <img :src="`/uploads/${user.photo}`" alt="User" class="w-20 h-20 mx-auto rounded-full mb-2" />
             <h3 class="font-semibold font-ubuntu">{{ user.name }}</h3>
             <p class="text-sm font-ubuntu">{{ user.email }}</p>
           </div>
@@ -47,7 +47,6 @@
   import { getToken } from '../utils/auth';
   import NavigateBar from '../components/NavigateBar.vue';
   import defaultProfileImage from '@/assets/Default/noProfile.png';
-  const API_BASE = import.meta.env.VITE_API_BASE || 'http://0.0.0.0:10000';
   
   const topFavorites = ref([]);
   const myFavorites = ref([]);

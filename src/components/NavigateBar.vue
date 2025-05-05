@@ -13,7 +13,7 @@
       <div class="relative" @click="toggleDropdown">
         <div class="flex items-center cursor-pointer">
           <img
-            :src="`${API_BASE}/uploads/${user.photo}`" alt="Profile" class="w-10 h-10 rounded-full object-cover "/>
+            :src="`/uploads/${user.photo}`" alt="Profile" class="w-10 h-10 rounded-full object-cover "/>
           <span class="ml-2 text-white font-[500]">{{ user.name || 'testuser' }}</span>
         </div>
         <div
@@ -34,7 +34,6 @@
  const userId = localStorage.getItem('user_id');
  const showDropdown = ref(false);
  import defaultProfileImage from '@/assets/Default/noProfile.png';
- const API_BASE = import.meta.env.VITE_API_BASE || 'http://0.0.0.0:10000';
 
  const user = ref({
     name: '',
