@@ -13,7 +13,7 @@
       <div class = "bg-white shadow-md rounded-lg p-6 mb-8">
         
       <div class="max-w-4xl mx-auto text-center mb-10">
-        <img :src="getPhotoUrl(user.photo)" alt="Profile" class="w-32 h-32 rounded-full mx-auto mb-4 shadow-lg border-4 border-white" />
+        <img :src="`/uploads/${user.photo}`" alt="Profile" class="w-32 h-32 rounded-full mx-auto mb-4 shadow-lg border-4 border-white" />
         <h1 class="text-5xl text-center text-rose-600 font-pacifico mb-4">{{ user.name}}</h1>
         <p class="text-center text-gray-600 font-ubuntu my-4 font-semibold">{{ user.username }}</p>
       </div>
