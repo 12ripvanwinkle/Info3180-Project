@@ -36,13 +36,25 @@ def assests(filename):
 
 @app.route('/uploads/<path:filename>')
 def uploaded_file(filename):
-    # DEBUG: print the upload folder and its contents
     upload_dir = app.config['UPLOAD_FOLDER']
-    print(f"🛠️  UPLOAD_FOLDER = {upload_dir}")
-    try:
-        print("🛠️  contains:", os.listdir(upload_dir))
-    except Exception as e:
-        print("🛠️  os.listdir error:", e)
+    print("🔍 CONFIGURED UPLOAD_FOLDER =", upload_dir)
+
+    # Print out the parent directories to see where things actually are:
+    def list_dir(path):
+        try:
+            return os.listdir(path)
+        except Exception as e:
+            return f"<error: {e}>"
+
+    project_src = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir, os.pardir))
+    app_dir     = os.path.abspath(os.path.join(os.path.dirname(__file__)))
+    static_dir  = os.path.join(app_dir, 'static')
+
+    print("📂 project/src contents:", list_dir(project_src))
+    print("📂 app/ contents:",      list_dir(app_dir))
+    print("📂 app/static contents:", list_dir(static_dir))
+    print("📂 app/static/uploads contents:", list_dir(upload_dir))
+
     return send_from_directory(upload_dir, filename)
 
 @app.route('/favicon.ico')
